@@ -1,4 +1,3 @@
-def JobName = Jenkins.instance.getItem('test2')
 pipeline {
     agent any
 
@@ -6,9 +5,24 @@ pipeline {
         stage('Build') {
             steps {
                 echo "${env.JOB_BASE_NAME}"
+
+            }
+            
+        }
+        stage('Download') {
+            steps {
+                sh """python3 /home/uprince/testApi.py"""
                 
             }
+            
+        }        
+        stage('Post') {
+            steps {
+                sh """python3 /home/uprince/UploadFileApi.py"""
+                
+            }
+            
         }
+        
     }
 }
-
