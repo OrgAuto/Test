@@ -19,7 +19,7 @@ pipeline {
         stage('Post') {
             steps {
                 sh """python3 /home/uprince/UploadFileApi.py"""
-                shortCommit = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+                sh """shortCommit = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()"""
                 
             }
             
