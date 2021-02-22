@@ -19,7 +19,7 @@ pipeline {
         stage('Post') {
             steps {
                 sh """python3 /home/uprince/UploadFileApi.py"""
-                sh """git status"""
+                sh """git rev-parse --short HEAD"""
                 
             }
             
