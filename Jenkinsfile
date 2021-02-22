@@ -19,7 +19,10 @@ pipeline {
         stage('Post') {
             steps {
                 sh """python3 /home/uprince/UploadFileApi.py"""
-                sh """git rev-parse --short HEAD"""
+                sh """
+                last_commit_id=`git rev-parse --short HEAD`
+                git diff-tree --no-commit-id --name-only -r $last_commit_id
+                """
                 
             }
             
