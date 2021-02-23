@@ -12,7 +12,8 @@ pipeline {
                     git remote -v
                     git branch
                     git status
-                    git rev-parse --short HEAD
+                    commit_id=`git rev-parse --short HEAD`
+                    git diff-tree --no-commit-id --name-only -r $commit_id
                 '''
                 
                 
