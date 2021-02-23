@@ -10,7 +10,9 @@ pipeline {
                 
                 sh '''
                     git remote -v
-                    git for-each-ref --format='%(upstream:short)' "$(git symbolic-ref -q HEAD)"
+                    git branch
+                    git status
+                    git rev-parse --short HEAD
                 '''
                 
                 
