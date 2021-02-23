@@ -7,8 +7,10 @@ pipeline {
             steps {
                 echo "${env.JOB_BASE_NAME}"
                 echo "${WORKSPACE}"
+                
                 sh '''
                     git remote -v
+                    git for-each-ref --format='%(upstream:short)' "$(git symbolic-ref -q HEAD)"
                 '''
                 
             }
