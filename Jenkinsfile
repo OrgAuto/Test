@@ -6,6 +6,10 @@ pipeline {
         stage('Build') {
             steps {
                 echo "${env.JOB_BASE_NAME}"
+                echo "${WORKSPACE}"
+                sh '''
+                    git remote -v
+                '''
                 
             }
         }
