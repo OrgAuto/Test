@@ -1,4 +1,3 @@
-def JobName = Jenkins.instance.getItem('test2')
 pipeline {
     agent any
 
@@ -7,18 +6,25 @@ pipeline {
             steps {
                 echo "${env.JOB_BASE_NAME}"
                 echo "${WORKSPACE}"
+
+            }
+            
+        }
+        stage('Download') {
+            steps {
+                sh """python3 /home/uprince/testApi.py"""
                 
-                sh '''
-                    git remote -v
-                    git branch
-                    git status
-                    commit_id=`git rev-parse --short HEAD`
-                    git diff-tree --no-commit-id --name-only -r $commit_id
-                '''
+            }
+            
+        }        
+        stage('Post') {
+            steps {
+                sh """python3 /home/uprince/UploadFileApi.py"""
                 
                 
             }
+            
         }
+        
     }
 }
-
