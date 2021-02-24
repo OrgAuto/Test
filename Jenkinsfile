@@ -5,6 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo "${env.JOB_BASE_NAME}"
+                echo "${WORKSPACE}"
 
             }
             
@@ -19,6 +20,7 @@ pipeline {
         stage('Post') {
             steps {
                 sh """python3 /home/uprince/UploadFileApi.py"""
+                
                 
             }
             
