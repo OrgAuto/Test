@@ -3,7 +3,7 @@
     def uploadSpec = """{
                     "files": [
                                 {
-                                    "pattern": "scripts/*",
+                                    "pattern": "${WORKSPACE}/*",
                                      "target": "myrepo/"
                                 }
                             ]
@@ -28,21 +28,18 @@ pipeline {
             
         }        
         stage('Post') {
+            
             steps {
+                archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true
+                sh """python3 /home/uprince/UploadFileApi.py""" 
                 script {
                     rtServer.upload(uploadSpec)
                 }
-                sh """python3 /home/uprince/UploadFileApi.py"""            
+                           
             }
             
         }
         
-    }
-    post {
-        always {
-            archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true
-            
-        }
     }
 
 }
