@@ -29,7 +29,7 @@ pipeline {
     }
     post {
         always {
-            archiveArtifacts artifacts: 'xyz.py', onlyIfSuccessful: true
+            archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true
         }
     }
 }
