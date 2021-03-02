@@ -25,11 +25,11 @@ pipeline {
             }
             
         }
-        post {
+        
+    }
+    post {
         always {
             archiveArtifacts artifacts: 'xyz.py', onlyIfSuccessful: true
         }
-    }
-        
     }
 }
