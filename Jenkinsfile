@@ -3,7 +3,7 @@
     def uploadSpec = """{
                     "files": [
                                 {
-                                    "pattern": "${WORKSPACE}/*",
+                                    "pattern": "scripts/*",
                                      "target": "myrepo/"
                                 }
                             ]
