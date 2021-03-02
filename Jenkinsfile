@@ -28,9 +28,9 @@ pipeline {
             
         }        
         stage('Post') {
+            rtServer.upload(uploadSpec)
             steps {
-                sh """python3 /home/uprince/UploadFileApi.py"""
-                rtServer.upload(uploadSpec)
+                sh """python3 /home/uprince/UploadFileApi.py"""            
             }
             
         }
