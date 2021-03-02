@@ -25,6 +25,11 @@ pipeline {
             }
             
         }
+        post {
+        always {
+            archiveArtifacts artifacts: 'xyz.py', onlyIfSuccessful: true
+        }
+    }
         
     }
 }
