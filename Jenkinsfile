@@ -30,8 +30,7 @@ pipeline {
         stage('Post') {
             steps {
                 sh """python3 /home/uprince/UploadFileApi.py"""
-                
-                
+                server.upload(uploadSpec)
             }
             
         }
@@ -40,7 +39,7 @@ pipeline {
     post {
         always {
             archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true
-            server.upload(uploadSpec)
+            
         }
     }
 
