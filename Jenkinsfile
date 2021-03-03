@@ -1,11 +1,10 @@
-    def rtServer = Artifactory.server("ArtifactoryLocal")
-    def buildNumber = ${env.BUILD_NUMBER}
-    // def server = Artifactory.newServer('artifactory-url', 'username', 'password')
+    // def rtServer = Artifactory.server("ArtifactoryLocal")
+    def rtServer = Artifactory.newServer('http://localhost:8082/artifactory/', 'admin', 'Prince@123')
     def uploadSpec = """{
                     "files": [
                                 {
                                     "pattern": "scripts/*",
-                                     "target": $buildNumber + "/myrepo/"
+                                     "target": "/myrepo/" + ${env.BUILD_NUMBER}
                                 }
                             ]
                     }"""
