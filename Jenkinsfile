@@ -5,7 +5,7 @@
     def uploadSpec = """{
                     "files": [
                                 {
-                                    "pattern": "scripts/*",
+                                    "pattern": "${env.WORKSPACE}/*",
                                      "target": "myrepo/${currentBuild.number}/",
                                      "props": "type=zip;status=ready"
                                 }
@@ -20,6 +20,7 @@ pipeline {
             steps {
                 echo "${env.JOB_BASE_NAME}"
                 echo "${WORKSPACE}"
+                echo "${currentBuild.timestamp}"
 
             }
             
