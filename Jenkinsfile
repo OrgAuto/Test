@@ -4,14 +4,14 @@
                     "files": [
                                 {
                                     "pattern": "scripts/*",
-                                     "target": "myrepo/"+${buildnumber}
+                                     "target": "myrepo/${env.BUILD_NUMBER}/"
                                 }
                             ]
                     }"""
     def buildInfo = rtServer.upload spec: uploadSpec
 pipeline {
     agent any
-
+    
     stages {
         stage('Build') {
             steps {
