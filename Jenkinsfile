@@ -35,7 +35,7 @@ pipeline {
             steps {
                 archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true
                 sh """python3 /home/uprince/UploadFileApi.py""" 
-                @buildInfo.env.collect()
+                // @buildInfo.env.collect()
                 script {
                     rtServer.upload spec: uploadSpec, buildInfo: buildInfo
                 }
