@@ -3,12 +3,14 @@
     def uploadSpec = """{
                     "files": [
                                 {
-                                    "pattern": "scripts.zip",
-                                     "target": "myrepo/"
+                                    "pattern": "scripts/*",
+                                     "target": "myrepo/",
+                                     "props": "type=zip;status=ready"
                                 }
                             ]
                     }"""
-    def buildInfo = rtServer.upload spec: uploadSpec
+    def buildInfo = Artifactory.newBuildInfo()
+
 pipeline {
     agent any
 
@@ -33,8 +35,9 @@ pipeline {
             steps {
                 archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true
                 sh """python3 /home/uprince/UploadFileApi.py""" 
+                buildInfo.env.collect()
                 script {
-                    rtServer.upload(uploadSpec)
+                    rtServer.upload spec: uploadSpec, buildInfo: buildInfo
                 }
                            
             }
