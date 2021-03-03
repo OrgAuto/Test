@@ -1,15 +1,16 @@
     def rtServer = Artifactory.server("ArtifactoryLocal")
+    def buildInfo = Artifactory.newBuildInfo()
+
     // def rtServer = Artifactory.server('http://localhost:8082/artifactory/', 'admin', 'Prince@123')
     def uploadSpec = """{
                     "files": [
                                 {
-                                    "pattern": "scripts/*",
-                                     "target": "myrepo/build.number",
+                                    "pattern": "${WORKSPACE}/*",
+                                     "target": "myrepo/",
                                      "props": "type=zip;status=ready"
                                 }
                             ]
                     }"""
-    def buildInfo = Artifactory.newBuildInfo()
 
 pipeline {
     agent any
