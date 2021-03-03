@@ -1,7 +1,7 @@
     // def rtServer = Artifactory.server("ArtifactoryLocal")
     // def rtServer = Artifactory.server('http://localhost:8082/artifactory/', 'admin', 'Prince@123')
     rtServer (
-        id: 'Artifactory-1',
+        id: 'ArtifactoryLocal',
         url: 'http://localhost:8082/artifactory',
         // If you're using username and password:
         username: 'admin',
