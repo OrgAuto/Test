@@ -4,7 +4,7 @@
                     "files": [
                                 {
                                     "pattern": "scripts/*",
-                                     "target": "myrepo/",
+                                     "target": "myrepo/build.number",
                                      "props": "type=zip;status=ready"
                                 }
                             ]
