@@ -4,7 +4,7 @@
                     "files": [
                                 {
                                     "pattern": "scripts/*",
-                                     "target": "/myrepo/${env.BUILD_NUMBER}"
+                                     "target": "/myrepo/"
                                 }
                             ]
                     }"""
