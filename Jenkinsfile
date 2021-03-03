@@ -1,12 +1,6 @@
     // def rtServer = Artifactory.server("ArtifactoryLocal")
     // def rtServer = Artifactory.server('http://localhost:8082/artifactory/', 'admin', 'Prince@123')
-    rtServer (
-        id: 'ArtifactoryLocal',
-        url: 'http://localhost:8082/artifactory',
-        // If you're using username and password:
-        username: 'admin',
-        password: 'Prince@123'
-        )
+    def rtServer (id: 'Artifactory-1', url: 'http://localhost:8082/artifactory', username: 'admin', password: 'Prince@123')
     def uploadSpec = """{
                     "files": [
                                 {
