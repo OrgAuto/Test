@@ -1,5 +1,5 @@
-    // def rtServer = Artifactory.server("ArtifactoryLocal")
-    def rtServer = Artifactory.server('http://localhost:8082/artifactory/', 'admin', 'Prince@123')
+    def rtServer = Artifactory.server("ArtifactoryLocal")
+    // def rtServer = Artifactory.server('http://localhost:8082/artifactory/', 'admin', 'Prince@123')
     def uploadSpec = """{
                     "files": [
                                 {
