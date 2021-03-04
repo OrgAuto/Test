@@ -1,3 +1,9 @@
+
+pipeline {
+    agent any
+    environment {
+        workspace = "${WORKSPACE}"
+    }
     def rtServer = Artifactory.server("ArtifactoryLocal")
     def buildInfo = Artifactory.newBuildInfo()
 
@@ -12,11 +18,6 @@
                             ]
                     }"""
 
-pipeline {
-    agent any
-    environment {
-        workspace = "${WORKSPACE}"
-    }
 
     stages {
         stage('Build') {
