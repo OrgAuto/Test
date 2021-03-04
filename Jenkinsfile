@@ -7,7 +7,7 @@ pipeline {
         def uploadSpec = """{
                     "files": [
                                 {
-                                    "pattern": ${WORKSPACE}/"scripts.zip",
+                                    "pattern": "/var/lib/jenkins/workspace/OrgAuto_Test_main/scripts.zip",
                                      "target": "myrepo/${currentBuild.number}/",
                                      "props": "type=zip;status=ready"
                                 }
