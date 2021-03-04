@@ -1,13 +1,14 @@
 pipeline {
     agent any
     environment {
-        def String  workspace = "${WORKSPACE}".toString()
+        workspace = "${WORKSPACE}"
+        String my_workspace = new String(workspace)
         def rtServer = Artifactory.server("ArtifactoryLocal")
         def buildInfo = Artifactory.newBuildInfo()
         def uploadSpec = """{
                     "files": [
                                 {
-                                    "pattern": "${workspace}/*.zip",
+                                    "pattern": "${my_workspace}/*.zip",
                                      "target": "myrepo/${currentBuild.number}/",
                                      "props": "type=zip;status=ready"
                                 }
