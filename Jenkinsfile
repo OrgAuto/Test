@@ -36,8 +36,8 @@ pipeline {
             
             steps {
                 archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true
-                zip archive: true, dir: './scripts', glob: '', zipFile: 'scripts.zip'
-                sh """python3 /home/uprince/UploadFileApi.py""" 
+                zip zipFile: 'scripts.zip', dir: './scripts/' glob: '', archive: true
+                // sh """python3 /home/uprince/UploadFileApi.py""" 
                 // @buildInfo.env.collect()
                 script {
                     rtServer.upload spec: uploadSpec, buildInfo: buildInfo
