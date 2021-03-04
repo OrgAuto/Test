@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        workspace = "${WORKSPACE}"
+        workspace = ${WORKSPACE}
         String my_workspace = new String(workspace)
         def rtServer = Artifactory.server("ArtifactoryLocal")
         def buildInfo = Artifactory.newBuildInfo()
