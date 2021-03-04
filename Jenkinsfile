@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        def String  workspace = "${WORKSPACE}"
+        def String  workspace = "${WORKSPACE}".toString()
         def rtServer = Artifactory.server("ArtifactoryLocal")
         def buildInfo = Artifactory.newBuildInfo()
         def uploadSpec = """{
