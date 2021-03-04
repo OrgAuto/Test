@@ -5,7 +5,7 @@
     def uploadSpec = """{
                     "files": [
                                 {
-                                    "pattern": "${env.WORKSPACE}/*",
+                                    "pattern": "scripts/*.zip",
                                      "target": "myrepo/${currentBuild.number}/",
                                      "props": "type=zip;status=ready"
                                 }
@@ -36,6 +36,7 @@ pipeline {
             
             steps {
                 archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true
+                zip archive: true, dir: './scripts', glob: '', zipFile: 'scripts.zip'
                 sh """python3 /home/uprince/UploadFileApi.py""" 
                 // @buildInfo.env.collect()
                 script {
