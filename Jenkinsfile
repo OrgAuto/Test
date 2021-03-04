@@ -21,9 +21,11 @@ pipeline {
             }
             
         }
-        rtServer = Artifactory.server("ArtifactoryLocal")
-        buildInfo = Artifactory.newBuildInfo()
-        uploadSpec = """{
+
+        stage('Post') {
+            def rtServer = Artifactory.server("ArtifactoryLocal")
+            def buildInfo = Artifactory.newBuildInfo()
+            def uploadSpec = """{
                     "files": [
                                 {
                                     "pattern": workspace/"*.zip",
@@ -32,7 +34,6 @@ pipeline {
                                 }
                             ]
                     }"""     
-        stage('Post') {
             
             steps {
                 archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true
