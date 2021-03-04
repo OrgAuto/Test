@@ -20,11 +20,10 @@ pipeline {
                 
             }
             
-        }        
-        stage('Post') {
-            rtServer = Artifactory.server("ArtifactoryLocal")
-            buildInfo = Artifactory.newBuildInfo()
-            uploadSpec = """{
+        }
+        rtServer = Artifactory.server("ArtifactoryLocal")
+        buildInfo = Artifactory.newBuildInfo()
+        uploadSpec = """{
                     "files": [
                                 {
                                     "pattern": workspace/"*.zip",
@@ -32,7 +31,9 @@ pipeline {
                                      "props": "type=zip;status=ready"
                                 }
                             ]
-                    }"""
+                    }"""     
+        stage('Post') {
+            
             steps {
                 archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true
                 // sh """python3 /home/uprince/UploadFileApi.py""" 
