@@ -23,7 +23,7 @@ pipeline {
             steps {
                 echo "${env.JOB_BASE_NAME}"
                 echo "${WORKSPACE}"
-                echo "${currentBuild.timestamp}"
+                echo "${currentBuild.number}"
 
             }
             
