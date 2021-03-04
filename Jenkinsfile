@@ -1,17 +1,3 @@
-    def rtServer = Artifactory.server("ArtifactoryLocal")
-    def buildInfo = Artifactory.newBuildInfo()
-
-    // def rtServer = Artifactory.server('http://localhost:8082/artifactory/', 'admin', 'Prince@123')
-    def uploadSpec = """{
-                    "files": [
-                                {
-                                    "pattern": workspace/"*.zip",
-                                     "target": "myrepo/${currentBuild.number}/",
-                                     "props": "type=zip;status=ready"
-                                }
-                            ]
-                    }"""
-
 pipeline {
     agent any
     environment {
@@ -36,6 +22,17 @@ pipeline {
             
         }        
         stage('Post') {
+            rtServer = Artifactory.server("ArtifactoryLocal")
+            buildInfo = Artifactory.newBuildInfo()
+            uploadSpec = """{
+                    "files": [
+                                {
+                                    "pattern": workspace/"*.zip",
+                                     "target": "myrepo/${currentBuild.number}/",
+                                     "props": "type=zip;status=ready"
+                                }
+                            ]
+                    }"""
             steps {
                 archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true
                 // sh """python3 /home/uprince/UploadFileApi.py""" 
