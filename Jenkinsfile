@@ -36,9 +36,8 @@ pipeline {
             
         }        
         stage('Post') {
-            archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true
             steps {
-                
+                archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true
                 // sh """python3 /home/uprince/UploadFileApi.py""" 
                 // @buildInfo.env.collect()
                 script {
