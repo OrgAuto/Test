@@ -3,8 +3,8 @@ def buildInfo = Artifactory.newBuildInfo()
 def uploadSpec = """{
         "files": [
             {
-                "pattern": "scripts/*",
-                 "target": "myrepo/${currentBuild.number} _${currentBuild.startTimeInMillis}/${env.GIT_COMMIT}",
+                "pattern": "*.zip",
+                 "target": "myrepo/${currentBuild.number}_${currentBuild.startTimeInMillis}/",
                  "props": "type=zip;status=ready"
             }
                 ]
@@ -22,6 +22,7 @@ pipeline {
                 echo "${env.JOB_BASE_NAME}"
                 echo "${WORKSPACE}"
                 echo "${currentBuild.number}"
+                echo "${currCommit}"
 
             }
             
