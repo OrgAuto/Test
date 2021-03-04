@@ -4,7 +4,7 @@ def uploadSpec = """{
         "files": [
             {
                 "pattern": "scripts/*",
-                 "target": "myrepo/${currentBuild.number} + "_" + ${currentBuild.startTimeInMillis}/",
+                 "target": "myrepo/${currentBuild.number} _${currentBuild.startTimeInMillis}/${env.GIT_COMMIT}",
                  "props": "type=zip;status=ready"
             }
                 ]
