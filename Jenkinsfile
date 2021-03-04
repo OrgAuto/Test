@@ -4,7 +4,7 @@ def uploadSpec = """{
         "files": [
             {
                 "pattern": "scripts/*",
-                 "target": "myrepo/${currentBuild.number} _${currentBuild.startTimeInMillis}/${env.GIT_COMMIT}",
+                 "target": "myrepo/${currentBuild.number} _${currentBuild.startTimeInMillis}/${currCommit}",
                  "props": "type=zip;status=ready"
             }
                 ]
@@ -14,6 +14,7 @@ pipeline {
     agent any
     environment {
         def workspace = "${WORKSPACE}"
+        def currCommit = "${env.GIT_COMMIT}"
     }
 
     stages {
@@ -22,6 +23,7 @@ pipeline {
                 echo "${env.JOB_BASE_NAME}"
                 echo "${WORKSPACE}"
                 echo "${currentBuild.number}"
+                echo "${currCommit}"
 
             }
             
