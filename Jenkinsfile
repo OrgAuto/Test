@@ -1,18 +1,20 @@
+def rtServer = Artifactory.server("ArtifactoryLocal")
+def buildInfo = Artifactory.newBuildInfo()
+def uploadSpec = """{
+        "files": [
+            {
+                "pattern": "scripts/*",
+                 "target": "myrepo/${currentBuild.number}/",
+                 "props": "type=zip;status=ready"
+            }
+                ]
+        }"""
+
 pipeline {
     agent any
     environment {
         def workspace = "${WORKSPACE}"
-        def rtServer = Artifactory.server("ArtifactoryLocal")
-        def buildInfo = Artifactory.newBuildInfo()
-        def uploadSpec = """{
-                    "files": [
-                                {
-                                    "pattern": "scripts/*",
-                                     "target": "myrepo/${currentBuild.number}/",
-                                     "props": "type=zip;status=ready"
-                                }
-                            ]
-                    }"""    
+            
     }
 
     stages {
