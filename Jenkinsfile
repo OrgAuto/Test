@@ -22,7 +22,6 @@ pipeline {
                 echo "${env.JOB_BASE_NAME}"
                 echo "${WORKSPACE}"
                 echo "${currentBuild.number}"
-                echo "${currCommit}"
 
             }
             
