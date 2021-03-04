@@ -14,6 +14,9 @@
 
 pipeline {
     agent any
+    environment {
+        workspace = "${WORKSPACE}"
+    }
 
     stages {
         stage('Build') {
@@ -34,13 +37,12 @@ pipeline {
         }        
         stage('Post') {
             archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true
-            zip zipFile: 'scripts.zip', dir: './scripts/' glob: '', archive: true
-            
             steps {
                 
                 // sh """python3 /home/uprince/UploadFileApi.py""" 
                 // @buildInfo.env.collect()
                 script {
+                    fileOperations([fileZipOperation(folderPath: 'scripts', outputFolderPath: workspace)])
                     rtServer.upload spec: uploadSpec, buildInfo: buildInfo
                 }
                            
