@@ -7,7 +7,7 @@ pipeline {
         def uploadSpec = """{
                     "files": [
                                 {
-                                    "pattern": workspace/"*.zip",
+                                    "pattern": "${WORKSPACE}/*.zip",
                                      "target": "myrepo/${currentBuild.number}/",
                                      "props": "type=zip;status=ready"
                                 }
