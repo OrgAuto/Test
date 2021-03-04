@@ -14,7 +14,6 @@ pipeline {
     agent any
     environment {
         def workspace = "${WORKSPACE}"
-        def branch_name = $(git rev-parse --abbrev-ref HEAD)
     }
 
     stages {
@@ -23,7 +22,6 @@ pipeline {
                 echo "${env.JOB_BASE_NAME}"
                 echo "${WORKSPACE}"
                 echo "${currentBuild.number}"
-                echo "${branch_name}"
 
             }
             
