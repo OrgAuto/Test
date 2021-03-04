@@ -33,10 +33,11 @@ pipeline {
             
         }        
         stage('Post') {
+            archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true
+            zip zipFile: 'scripts.zip', dir: './scripts/' glob: '', archive: true
             
             steps {
-                archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true
-                zip zipFile: 'scripts.zip', dir: './scripts/' glob: '', archive: true
+                
                 // sh """python3 /home/uprince/UploadFileApi.py""" 
                 // @buildInfo.env.collect()
                 script {
