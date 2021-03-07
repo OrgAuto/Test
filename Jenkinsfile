@@ -35,6 +35,9 @@ pipeline {
         }
 
         stage('Post') { 
+             when {
+              branch 'main'
+            }
             
             steps {
                 archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true
@@ -47,14 +50,6 @@ pipeline {
                            
             }
             
-        }
-        stage('master-branch-stuff') {
-            when {
-              branch 'main'
-            }
-        steps {
-        echo 'run this stage - ony if the branch = master branch'
-            }
         }
         
     }
