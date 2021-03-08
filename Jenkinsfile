@@ -3,8 +3,8 @@ pipeline {
     agent any
 
     environment {
-        def workspace = "${WORKSPACE}"
-        def curr_commit = "${env.GIT_COMMIT}"
+        // def workspace = "${WORKSPACE}"
+        // def curr_commit = "${env.GIT_COMMIT}"
     }
 
     stages {
@@ -33,9 +33,10 @@ pipeline {
             }
             
             steps {
-                archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true
+                
                 // sh """python3 /home/uprince/UploadFileApi.py""" 
                 script {
+                    def workspace = "${WORKSPACE}"
                     def rtServer = Artifactory.server("ArtifactoryLocal")
                     def buildInfo = Artifactory.newBuildInfo()
                     def uploadSpec = """{
@@ -47,6 +48,16 @@ pipeline {
                                     }
                                 ]
                         }"""
+                    def downloadSpec = """{
+                                "files": [
+                                    {
+                                        "pattern": "*.zip",
+                                        "target": "myrepo/${currentBuild.number}_${currentBuild.startTimeInMillis}/${env.GIT_COMMIT}",
+                                         "props": "type=zip;status=ready"
+                                    }
+                                ]
+                        }"""
+                    archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true               
                     fileOperations([fileZipOperation(folderPath: 'scripts', outputFolderPath: workspace)])
                     rtServer.upload spec: uploadSpec, buildInfo: buildInfo
                 }
