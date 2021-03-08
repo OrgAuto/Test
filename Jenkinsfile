@@ -53,7 +53,7 @@ pipeline {
                     def downloadSpec = """{
                                 "files": [
                                     {
-                                        "pattern": "myrepo/${currentBuild.number}_${build_time}/${env.GIT_COMMIT}/*.zip",
+                                        "pattern": "myrepo/${currentBuild.number}_${build_time}/${env.GIT_COMMIT}/**",
                                         "target": "${workspace}/${env.JOB_BASE_NAME}/",
                                          "props": "p1=v1;p2=v2"
                                     }
