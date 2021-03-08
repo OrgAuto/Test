@@ -38,7 +38,7 @@ pipeline {
                 script {
                     def workspace = "${WORKSPACE}"
                     def now = new Date()
-                    build_time = now.format("yyMMdd_HHmm", TimeZone.getTimeZone('PST'))
+                    def build_time = now.format("yyMMdd_HHmm", TimeZone.getTimeZone('PST'))
                     def rtServer = Artifactory.server("ArtifactoryLocal")
                     def buildInfo = Artifactory.newBuildInfo()
                     def uploadSpec = """{
