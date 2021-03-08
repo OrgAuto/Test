@@ -37,8 +37,7 @@ pipeline {
                 // sh """python3 /home/uprince/UploadFileApi.py""" 
                 script {
                     def props = readProperties file: 'env.groovy'
-                    def rtServer = props.rtServer
-                    def upload = props.rtServer.upload()
+                    env.rtServer = props.rtServer
                     archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true               
                     fileOperations([fileZipOperation(folderPath: 'scripts', outputFolderPath: props.workspace)])
                     rtServer.upload spec: props.uploadSpec, buildInfo: props.buildInfo
