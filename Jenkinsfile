@@ -43,7 +43,7 @@ pipeline {
                                 "files": [
                                     {
                                         "pattern": "*.zip",
-                                        "target": "myrepo/${currentBuild.number}_${currentBuild.startTimeInMillis}/${env.GIT_COMMIT}",
+                                        "target": "myrepo/${currentBuild.number}_${currentBuild.startTimeInMillis}/${env.GIT_COMMIT}/",
                                          "props": "type=zip;status=ready"
                                     }
                                 ]
