@@ -38,6 +38,8 @@ pipeline {
                 script {
                     def workspace = "${WORKSPACE}"
                     def my_time = "${currentBuild.startTimeInMillis}"
+                    def now = new Date()
+                    echo(now.format("yyMMdd.HHmm", TimeZone.getTimeZone('UTC')))
                     def rtServer = Artifactory.server("ArtifactoryLocal")
                     def buildInfo = Artifactory.newBuildInfo()
                     def uploadSpec = """{
@@ -58,7 +60,6 @@ pipeline {
                                     }
                                 ]
                         }"""
-                    Date(my_time).format("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                     echo "${my_time}"
                     archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true               
                     fileOperations([fileZipOperation(folderPath: 'scripts', outputFolderPath: workspace)])
