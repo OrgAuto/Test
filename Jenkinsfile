@@ -1,16 +1,4 @@
 
-def rtServer = Artifactory.server("ArtifactoryLocal")
-def buildInfo = Artifactory.newBuildInfo()
-def uploadSpec = """{
-        "files": [
-            {
-                "pattern": "*.zip",
-                 "target": "myrepo/${currentBuild.number}_${currentBuild.startTimeInMillis}/${env.GIT_COMMIT}",
-                 "props": "type=zip;status=ready"
-            }
-                ]
-        }"""
-
 pipeline {
     agent any
 
@@ -48,6 +36,17 @@ pipeline {
                 archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true
                 // sh """python3 /home/uprince/UploadFileApi.py""" 
                 script {
+                    def rtServer = Artifactory.server("ArtifactoryLocal")
+                    def buildInfo = Artifactory.newBuildInfo()
+                    def uploadSpec = """{
+                                "files": [
+                                    {
+                                        "pattern": "*.zip",
+                                        "target": "myrepo/${currentBuild.number}_${currentBuild.startTimeInMillis}/${env.GIT_COMMIT}",
+                                         "props": "type=zip;status=ready"
+                                    }
+                                ]
+                        }"""
                     fileOperations([fileZipOperation(folderPath: 'scripts', outputFolderPath: workspace)])
                     rtServer.upload spec: uploadSpec, buildInfo: buildInfo
                 }
