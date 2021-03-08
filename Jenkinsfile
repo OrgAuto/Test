@@ -36,11 +36,12 @@ pipeline {
                 
                 // sh """python3 /home/uprince/UploadFileApi.py""" 
                 script {
-                    readFile('env.groovy').trim()
-                    // archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true               
-                    fileOperations([fileZipOperation(folderPath: 'scripts', outputFolderPath: workspace)])
-                    rtServer.upload spec: uploadSpec, buildInfo: buildInfo
-                    rtServer.download spec: downloadSpec
+                    def props = readProperties file: 'env.groovy'
+                    def rtServer = props.rtServer
+                    archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true               
+                    fileOperations([fileZipOperation(folderPath: 'scripts', outputFolderPath: props.workspace)])
+                    rtServer.upload spec: props.uploadSpec, buildInfo: props.buildInfo
+                    rtServer.download spec: props.downloadSpec
                 }
                            
             }
