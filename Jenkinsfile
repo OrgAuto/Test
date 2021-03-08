@@ -27,10 +27,11 @@ pipeline {
             
         }
         stage('Download') {
-            steps {
-                sh """python3 /home/uprince/testApi.py"""
+            echo "Download"
+            // steps {
+            //     sh """python3 /home/uprince/testApi.py"""
                 
-            }
+            // }
             
         }
 
@@ -41,6 +42,7 @@ pipeline {
             
             steps {
                 echo "${env.GIT_COMMIT}"
+                echo "${workspace}"
             //     archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true
             //     // sh """python3 /home/uprince/UploadFileApi.py""" 
             //     // @buildInfo.env.collect()
