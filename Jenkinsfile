@@ -21,7 +21,6 @@ pipeline {
         stage('Download') {            
             steps {
                 echo "Download"
-                // sh """python3 /home/uprince/testApi.py"""
                 
             }
             
@@ -34,11 +33,10 @@ pipeline {
             
             steps {
                 
-                // sh """python3 /home/uprince/UploadFileApi.py""" 
                 script {
                     load "env.groovy"
-                    def rtServer = env.rtServer
-                    // def buildInfo = env.buildInfo
+                    def rtServer = Artifactory.server("ArtifactoryLocal")
+                    def buildInfo = Artifactory.newBuildInfo()
                     archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true               
                     fileOperations([fileZipOperation(folderPath: 'scripts', outputFolderPath: env.workspace)])
                     rtServer.upload spec: env.uploadSpec, buildInfo: env.buildInfo
