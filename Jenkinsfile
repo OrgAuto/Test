@@ -1,14 +1,11 @@
-environment {
-    def workspace = "${WORKSPACE}"
-    def curr_commit = "${env.GIT_COMMIT}"
-}
+
 def rtServer = Artifactory.server("ArtifactoryLocal")
 def buildInfo = Artifactory.newBuildInfo()
 def uploadSpec = """{
         "files": [
             {
                 "pattern": "*.zip",
-                 "target": "myrepo/${currentBuild.number}_${currentBuild.startTimeInMillis}/,
+                 "target": "myrepo/${currentBuild.number}_${currentBuild.startTimeInMillis}/${env.GIT_COMMIT}",
                  "props": "type=zip;status=ready"
             }
                 ]
@@ -16,6 +13,11 @@ def uploadSpec = """{
 
 pipeline {
     agent any
+
+    environment {
+        def workspace = "${WORKSPACE}"
+        def curr_commit = "${env.GIT_COMMIT}"
+    }
 
     stages {
         stage('Build') {
@@ -45,10 +47,10 @@ pipeline {
             steps {
                 archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true
                 // sh """python3 /home/uprince/UploadFileApi.py""" 
-                // script {
-                //     fileOperations([fileZipOperation(folderPath: 'scripts', outputFolderPath: workspace)])
-                //     rtServer.upload spec: uploadSpec, buildInfo: buildInfo
-                // }
+                script {
+                    fileOperations([fileZipOperation(folderPath: 'scripts', outputFolderPath: workspace)])
+                    rtServer.upload spec: uploadSpec, buildInfo: buildInfo
+                }
                            
             }
             
