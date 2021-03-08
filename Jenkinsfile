@@ -26,12 +26,12 @@ pipeline {
             }
             
         }
-        stage('Download') {
-            echo "Download"
-            // steps {
-            //     sh """python3 /home/uprince/testApi.py"""
+        stage('Download') {            
+            steps {
+                echo "Download"
+                // sh """python3 /home/uprince/testApi.py"""
                 
-            // }
+            }
             
         }
 
