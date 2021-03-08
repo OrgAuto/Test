@@ -39,9 +39,9 @@ pipeline {
                     load "env.groovy"
                     def rtServer = Artifactory.server("ArtifactoryLocal")
                     archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true               
-                    fileOperations([fileZipOperation(folderPath: 'scripts', outputFolderPath: workspace)])
-                    rtServer.upload spec: uploadSpec, buildInfo: buildInfo
-                    rtServer.download spec: downloadSpec
+                    fileOperations([fileZipOperation(folderPath: 'scripts', outputFolderPath: env.workspace)])
+                    rtServer.upload spec: env.uploadSpec, buildInfo: env.buildInfo
+                    rtServer.download spec: env.downloadSpec
                 }
                            
             }
