@@ -8,7 +8,7 @@ def uploadSpec = """{
         "files": [
             {
                 "pattern": "*.zip",
-                 "target": "myrepo/${currentBuild.number}_${currentBuild.startTimeInMillis}/${curr_commit}/,
+                 "target": "myrepo/${currentBuild.number}_${currentBuild.startTimeInMillis}/,
                  "props": "type=zip;status=ready"
             }
                 ]
@@ -22,7 +22,9 @@ pipeline {
             steps {
                 echo "${env.JOB_BASE_NAME}"
                 echo "${WORKSPACE}"
+                echo "${curr_commit}"
                 echo "${currentBuild.number}"
+                echo "${currentBuild.changeSets}"
 
             }
             
@@ -44,10 +46,10 @@ pipeline {
             steps {
                 archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true
                 // sh """python3 /home/uprince/UploadFileApi.py""" 
-                script {
-                    fileOperations([fileZipOperation(folderPath: 'scripts', outputFolderPath: workspace)])
-                    rtServer.upload spec: uploadSpec, buildInfo: buildInfo
-                }
+                // script {
+                //     fileOperations([fileZipOperation(folderPath: 'scripts', outputFolderPath: workspace)])
+                //     rtServer.upload spec: uploadSpec, buildInfo: buildInfo
+                // }
                            
             }
             
