@@ -41,8 +41,8 @@ pipeline {
                     // def buildInfo = Artifactory.newBuildInfo()
                     archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true               
                     fileOperations([fileZipOperation(folderPath: 'scripts', outputFolderPath: env.workspace)])
-                    env.rtServer.upload spec: env.uploadSpec, buildInfo: env.buildInfo
-                    env.rtServer.download spec: env.downloadSpec
+                    rtServer.upload spec: env.uploadSpec, buildInfo: env.buildInfo
+                    rtServer.download spec: env.downloadSpec
                 }
                            
             }
