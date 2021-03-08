@@ -1,6 +1,8 @@
 def workspace = "${WORKSPACE}"
 def now = new Date()
 def build_time = now.format("yyMMdd_HHmm", TimeZone.getTimeZone('PST'))
+def rtServer = Artifactory.server("ArtifactoryLocal")
+env.buildInfo = Artifactory.newBuildInfo()
 env.uploadSpec = """{
             "files": [
                 {
