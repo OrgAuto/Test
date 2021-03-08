@@ -40,8 +40,8 @@ pipeline {
                     def rtServer = props.rtServer
                     archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true               
                     fileOperations([fileZipOperation(folderPath: 'scripts', outputFolderPath: props.workspace)])
-                    rtServer.upload spec: props.uploadSpec, buildInfo: props.buildInfo
-                    rtServer.download spec: props.downloadSpec
+                    props.rtServer.upload spec: props.uploadSpec, buildInfo: props.buildInfo
+                    props.rtServer.download spec: props.downloadSpec
                 }
                            
             }
