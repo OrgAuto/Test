@@ -1,9 +1,9 @@
-env.workspace = "${WORKSPACE}"
-env.now = new Date()
-env.build_time = now.format("yyMMdd_HHmm", TimeZone.getTimeZone('PST'))
-env.rtServer = Artifactory.server("ArtifactoryLocal")
-env.buildInfo = Artifactory.newBuildInfo()
-env.uploadSpec = """{
+def workspace = "${WORKSPACE}"
+def now = new Date()
+def build_time = now.format("yyMMdd_HHmm", TimeZone.getTimeZone('PST'))
+def rtServer = Artifactory.server("ArtifactoryLocal")
+def buildInfo = Artifactory.newBuildInfo()
+def uploadSpec = """{
             "files": [
                 {
                     "pattern": "*.zip",
@@ -12,7 +12,7 @@ env.uploadSpec = """{
                 }
             ]
     }"""
-env.downloadSpec = """{
+def downloadSpec = """{
             "files": [
                 {
                     "pattern": "myrepo/${currentBuild.number}_${build_time}/${env.GIT_COMMIT}/**",
