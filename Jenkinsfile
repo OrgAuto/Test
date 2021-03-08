@@ -22,7 +22,6 @@ pipeline {
             steps {
                 echo "${env.JOB_BASE_NAME}"
                 echo "${WORKSPACE}"
-                echo "${curr_commit}"
                 echo "${currentBuild.number}"
                 echo "${currentBuild.changeSets}"
 
