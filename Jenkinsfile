@@ -37,12 +37,12 @@ pipeline {
                 // sh """python3 /home/uprince/UploadFileApi.py""" 
                 script {
                     load "env.groovy"
-                    // def rtServer = Artifactory.server("ArtifactoryLocal")
-                    // def buildInfo = Artifactory.newBuildInfo()
+                    def rtServer = Artifactory.server("ArtifactoryLocal")
+                    def buildInfo = Artifactory.newBuildInfo()
                     archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true               
                     fileOperations([fileZipOperation(folderPath: 'scripts', outputFolderPath: env.workspace)])
-                    rtServer.${env.upload} spec: env.uploadSpec, buildInfo: env.buildInfo
-                    rtServer.${env.download} spec: env.downloadSpec
+                    rtServer.upload spec: env.uploadSpec, buildInfo: env.buildInfo
+                    rtServer.download spec: env.downloadSpec
                 }
                            
             }
