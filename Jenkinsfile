@@ -38,10 +38,11 @@ pipeline {
                 script {
                     def props = readProperties file: 'env.groovy'
                     def rtServer = props.rtServer
+                    def upload = props.rtServer.upload()
                     archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true               
                     fileOperations([fileZipOperation(folderPath: 'scripts', outputFolderPath: props.workspace)])
-                    props.rtServer.upload spec: props.uploadSpec, buildInfo: props.buildInfo
-                    props.rtServer.download spec: props.downloadSpec
+                    rtServer.upload spec: props.uploadSpec, buildInfo: props.buildInfo
+                    rtServer.download spec: props.downloadSpec
                 }
                            
             }
