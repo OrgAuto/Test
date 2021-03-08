@@ -58,7 +58,7 @@ pipeline {
                                     }
                                 ]
                         }"""
-                    echo(Date(my_time).format("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"))
+                    Date(my_time).format("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                     echo "${my_time}"
                     archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true               
                     fileOperations([fileZipOperation(folderPath: 'scripts', outputFolderPath: workspace)])
