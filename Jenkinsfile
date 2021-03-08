@@ -2,10 +2,10 @@
 pipeline {
     agent any
 
-    environment {
-        // def workspace = "${WORKSPACE}"
-        // def curr_commit = "${env.GIT_COMMIT}"
-    }
+    // environment {
+    //     // def workspace = "${WORKSPACE}"
+    //     // def curr_commit = "${env.GIT_COMMIT}"
+    // }
 
     stages {
         stage('Build') {
