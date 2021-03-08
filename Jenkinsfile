@@ -36,12 +36,12 @@ pipeline {
                 
                 // sh """python3 /home/uprince/UploadFileApi.py""" 
                 script {
-                    def props = readProperties file: 'env.groovy'
+                    load "env.groovy"
                     def rtServer = Artifactory.server("ArtifactoryLocal")
                     archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true               
-                    fileOperations([fileZipOperation(folderPath: 'scripts', outputFolderPath: props.workspace)])
-                    rtServer.upload spec: props.uploadSpec, buildInfo: props.buildInfo
-                    rtServer.download spec: props.downloadSpec
+                    fileOperations([fileZipOperation(folderPath: 'scripts', outputFolderPath: workspace)])
+                    rtServer.upload spec: uploadSpec, buildInfo: buildInfo
+                    rtServer.download spec: downloadSpec
                 }
                            
             }
