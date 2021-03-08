@@ -54,12 +54,12 @@ pipeline {
                                 "files": [
                                     {
                                         "pattern": "myrepo/${currentBuild.number}_${build_time}/${env.GIT_COMMIT}/**",
-                                        "target": "${workspace}/${env.JOB_BASE_NAME}/",
+                                        "target": "${workspace}/${env.JOB_BASE_NAME}/temp/",
                                          "props": "p1=v1;p2=v2"
                                     }
                                 ]
                         }"""
-                    archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true               
+                    // archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true               
                     fileOperations([fileZipOperation(folderPath: 'scripts', outputFolderPath: workspace)])
                     rtServer.upload spec: uploadSpec, buildInfo: buildInfo
                     rtServer.download spec: downloadSpec
