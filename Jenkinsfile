@@ -27,7 +27,7 @@ pipeline {
             
         }
 
-        stage('Post') { 
+        stage('Publish and Download') { 
              when {
               branch 'main'
             }
@@ -36,29 +36,7 @@ pipeline {
                 
                 // sh """python3 /home/uprince/UploadFileApi.py""" 
                 script {
-                    def workspace = "${WORKSPACE}"
-                    def now = new Date()
-                    def build_time = now.format("yyMMdd_HHmm", TimeZone.getTimeZone('PST'))
-                    def rtServer = Artifactory.server("ArtifactoryLocal")
-                    def buildInfo = Artifactory.newBuildInfo()
-                    def uploadSpec = """{
-                                "files": [
-                                    {
-                                        "pattern": "*.zip",
-                                        "target": "myrepo/${currentBuild.number}_${build_time}/${env.GIT_COMMIT}/",
-                                         "props": "type=zip;status=ready"
-                                    }
-                                ]
-                        }"""
-                    def downloadSpec = """{
-                                "files": [
-                                    {
-                                        "pattern": "myrepo/${currentBuild.number}_${build_time}/${env.GIT_COMMIT}/**",
-                                        "target": "${WORKSPACE}/${env.JOB_BASE_NAME}/temp/",
-                                        "recursive": "true"
-                                    }
-                                ]
-                        }"""
+                    readFile('env.groovy').trim()
                     // archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true               
                     fileOperations([fileZipOperation(folderPath: 'scripts', outputFolderPath: workspace)])
                     rtServer.upload spec: uploadSpec, buildInfo: buildInfo
