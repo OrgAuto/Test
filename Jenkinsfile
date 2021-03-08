@@ -37,13 +37,14 @@ pipeline {
                 // sh """python3 /home/uprince/UploadFileApi.py""" 
                 script {
                     def workspace = "${WORKSPACE}"
+                    def my_time = "${currentBuild.startTimeInMillis}"
                     def rtServer = Artifactory.server("ArtifactoryLocal")
                     def buildInfo = Artifactory.newBuildInfo()
                     def uploadSpec = """{
                                 "files": [
                                     {
                                         "pattern": "*.zip",
-                                        "target": "myrepo/${currentBuild.number}_${currentBuild.startTimeInMillis}/${env.GIT_COMMIT}/",
+                                        "target": "myrepo/${currentBuild.number}_${my_time}/${env.GIT_COMMIT}/",
                                          "props": "type=zip;status=ready"
                                     }
                                 ]
@@ -52,11 +53,12 @@ pipeline {
                                 "files": [
                                     {
                                         "pattern": "*.zip",
-                                        "target": "myrepo/${currentBuild.number}_${currentBuild.startTimeInMillis}/${env.GIT_COMMIT}",
+                                        "target": "myrepo/${currentBuild.number}_${my_time}/${env.GIT_COMMIT}",
                                          "props": "type=zip;status=ready"
                                     }
                                 ]
                         }"""
+                    echo "${my_time}"
                     archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true               
                     fileOperations([fileZipOperation(folderPath: 'scripts', outputFolderPath: workspace)])
                     rtServer.upload spec: uploadSpec, buildInfo: buildInfo
