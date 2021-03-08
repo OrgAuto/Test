@@ -2,10 +2,10 @@
 pipeline {
     agent any
 
-    environment {
-        def now = new Date()
-        
-    }
+    // environment {
+    //     // def workspace = "${WORKSPACE}"
+    //     // def curr_commit = "${env.GIT_COMMIT}"
+    // }
 
     stages {
         stage('Build') {
@@ -37,15 +37,15 @@ pipeline {
                 // sh """python3 /home/uprince/UploadFileApi.py""" 
                 script {
                     def workspace = "${WORKSPACE}"
-                    def my_time = "${currentBuild.startTimeInMillis}"
-                    echo(env.now.format("yyMMdd_HHmm", TimeZone.getTimeZone('UTC')))
+                    def now = new Date()
+                    build_time = now.format("yyMMdd_HHmm", TimeZone.getTimeZone('UTC'))
                     def rtServer = Artifactory.server("ArtifactoryLocal")
                     def buildInfo = Artifactory.newBuildInfo()
                     def uploadSpec = """{
                                 "files": [
                                     {
                                         "pattern": "*.zip",
-                                        "target": "myrepo/${currentBuild.number}_${my_time}/${env.GIT_COMMIT}/",
+                                        "target": "myrepo/${currentBuild.number}_${build_time}/${env.GIT_COMMIT}/",
                                          "props": "type=zip;status=ready"
                                     }
                                 ]
@@ -54,12 +54,11 @@ pipeline {
                                 "files": [
                                     {
                                         "pattern": "*.zip",
-                                        "target": "myrepo/${currentBuild.number}_${my_time}/${env.GIT_COMMIT}",
+                                        "target": "myrepo/${currentBuild.number}_${build_time}/${env.GIT_COMMIT}",
                                          "props": "type=zip;status=ready"
                                     }
                                 ]
                         }"""
-                    echo "${my_time}"
                     archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true               
                     fileOperations([fileZipOperation(folderPath: 'scripts', outputFolderPath: workspace)])
                     rtServer.upload spec: uploadSpec, buildInfo: buildInfo
