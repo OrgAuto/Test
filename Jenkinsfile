@@ -2,10 +2,10 @@
 pipeline {
     agent any
 
-    // environment {
-    //     // def workspace = "${WORKSPACE}"
-    //     // def curr_commit = "${env.GIT_COMMIT}"
-    // }
+    environment {
+        def now = new Date()
+        
+    }
 
     stages {
         stage('Build') {
@@ -38,8 +38,7 @@ pipeline {
                 script {
                     def workspace = "${WORKSPACE}"
                     def my_time = "${currentBuild.startTimeInMillis}"
-                    def now = new Date()
-                    echo(now.format("yyMMdd.HHmm", TimeZone.getTimeZone('UTC')))
+                    echo(env.now.format("yyMMdd_HHmm", TimeZone.getTimeZone('UTC')))
                     def rtServer = Artifactory.server("ArtifactoryLocal")
                     def buildInfo = Artifactory.newBuildInfo()
                     def uploadSpec = """{
