@@ -24,7 +24,7 @@ pipeline {
                 script {
                     def bRun = build 'DeployPipeline' 
                     for(String line : bRun.getRawBuild()){
-                        echo line
+                        echo "${line}"
                     }
                 }
             }
