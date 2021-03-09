@@ -26,7 +26,7 @@ pipeline {
                     for(String line : bRun.getRawBuild()){
                         echo line
                     }
-                
+                }
             }
             
         }
