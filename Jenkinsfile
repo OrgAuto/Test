@@ -21,7 +21,11 @@ pipeline {
         stage('Download') {            
             steps {
                 echo "Executing another scripted pipeline Job"
-                build job: "DeployPipeline"
+                script {
+                    def bRun = build 'DeployPipeline' 
+                    for(String line : bRun.getRawBuild()){
+                        echo line
+                    }
                 
             }
             
