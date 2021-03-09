@@ -20,7 +20,8 @@ pipeline {
         }
         stage('Download') {            
             steps {
-                echo "Download"
+                echo "Executing another scripted pipeline Job"
+                build job: "DeployPipeline"
                 
             }
             
