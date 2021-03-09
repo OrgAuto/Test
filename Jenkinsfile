@@ -26,7 +26,7 @@ pipeline {
                     // for(String line : bRun.getRawBuild().getLog(100)){
                     //     echo "${line}"
                     // }
-                    for(String line : bRun.rawBuild.log){
+                    for(String line : bRun.rawBuild.getLog(100)){
                         echo "${line}"
                     }
 
