@@ -23,7 +23,7 @@ pipeline {
                 echo "Executing another scripted pipeline Job"
                 script {
                     def bRun = build 'DeployPipeline' 
-                    for(String line : bRun.getRawBuild()){
+                    for(String line : bRun.getRawBuild().getLog()){
                         echo "${line}"
                     }
                 }
