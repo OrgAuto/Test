@@ -1,9 +1,10 @@
-def transitionInput =
-    [
-        transition: [
-            id: '15'
-        ]
-    ]
+def issue = [fields: [ project: [key: 'LOC'],
+                             summary: 'Release x.y.z Review',
+                             description: 'Review changes for release x.y.z ',
+                             issuetype: [name: 'Task']]]
+def newIssue = jiraNewIssue issue: issue
+issueKey = newIssue.data.key
+def transitionInput = [transition: [id: 15]]
 pipeline {
     agent any
 
@@ -48,7 +49,7 @@ pipeline {
                     rtServer.upload spec: env.uploadSpec, buildInfo: env.buildInfo
                     rtServer.download spec: env.downloadSpec
 //                     jiraAddComment comment: 'Auto comment from Jenkins', idOrKey: 'LOC-10', site: 'Jira-Local-Site'
-                    jiraTransitionIssue idOrKey: "10009", input: transitionInput, site: 'Jira-Local-Site'
+                    jiraTransitionIssue idOrKey: issueKey, input: transitionInput
                 }
                            
             }
