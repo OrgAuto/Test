@@ -1,7 +1,7 @@
 def transitionInput =
     [
         transition: [
-            id: '14'
+            id: '15'
         ]
     ]
 pipeline {
@@ -48,7 +48,7 @@ pipeline {
                     rtServer.upload spec: env.uploadSpec, buildInfo: env.buildInfo
                     rtServer.download spec: env.downloadSpec
 //                     jiraAddComment comment: 'Auto comment from Jenkins', idOrKey: 'LOC-10', site: 'Jira-Local-Site'
-                    jiraTransitionIssue idOrKey: "LOC-10", input: transitionInput, site: 'Jira-Local-Site'
+                    jiraTransitionIssue idOrKey: "LOC-10", site: 'Jira-Local-Site'
                 }
                            
             }
