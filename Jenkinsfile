@@ -2,11 +2,6 @@
 pipeline {
     agent any
 
-    // environment {
-    //     // def workspace = "${WORKSPACE}"
-    //     // def curr_commit = "${env.GIT_COMMIT}"
-    // }
-
     stages {
         stage('Build') {
             steps {
@@ -27,11 +22,9 @@ pipeline {
                         echo "${line}"
                     }
 
-                    }
-
                 }
+
             }
-            
         }
 
         stage('Publish and Download') { 
@@ -55,7 +48,7 @@ pipeline {
             }
             
         }
-        
+
     }
 
 }
