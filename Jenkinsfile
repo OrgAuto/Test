@@ -1,3 +1,4 @@
+
 pipeline {
     agent any
 
@@ -42,20 +43,13 @@ pipeline {
                     fileOperations([fileZipOperation(folderPath: 'scripts', outputFolderPath: env.workspace)])
                     rtServer.upload spec: env.uploadSpec, buildInfo: env.buildInfo
                     rtServer.download spec: env.downloadSpec
-//                  jiraAddComment comment: 'Auto comment from Jenkins', idOrKey: 'LOC-10', site: 'Jira-Local-Site'
+                    jiraAddComment comment: 'Auto comment from Jenkins', idOrKey: 'LOC-10', site: 'Jira-Local-Site'
                 }
                            
             }
             
         }
-        stage('JIRA') {
-                def testIssue = [fields: [ project: [key: 'LOC'],
-                                summary: 'New JIRA Created from Jenkins.',
-                                description: 'New JIRA Created from Jenkins.',
-                                issuetype: [id: '20']]]
-                response = jiraNewIssue issue: testIssue, site: 'Jira-Local-Site'
-                echo response.successful.toString()
-                echo response.data.toString()
-            }
-     }
+
+    }
+
 }
