@@ -1,10 +1,4 @@
-def issue = [fields: [ project: [key: 'LOC'],
-                             summary: 'Release x.y.z Review',
-                             description: 'Review changes for release x.y.z ',
-                             issuetype: [name: 'Task']]]
-def newIssue = jiraNewIssue issue: issue, site: 'Jira-Local-Site'
-issueKey = newIssue.data.key
-def transitionInput = [transition: [id: 15]]
+
 pipeline {
     agent any
 
@@ -49,11 +43,20 @@ pipeline {
                     rtServer.upload spec: env.uploadSpec, buildInfo: env.buildInfo
                     rtServer.download spec: env.downloadSpec
 //                     jiraAddComment comment: 'Auto comment from Jenkins', idOrKey: 'LOC-10', site: 'Jira-Local-Site'
-                    jiraTransitionIssue idOrKey: issueKey, input: transitionInput
                 }
                            
             }
             
+        }
+        stage('JIRA') {
+                def testIssue = [fields: [ project: [key: 'LOC'],
+                                 summary: 'New JIRA Created from Jenkins.',
+                                 description: 'New JIRA Created from Jenkins.',
+                                 issuetype: [id: '10002']]]
+
+        response = jiraNewIssue issue: testIssue, site: 'Jira-Local-Site'
+        echo response.successful.toString()
+        echo response.data.toString()
         }
 
     }
