@@ -43,7 +43,7 @@ pipeline {
                     rtServer.upload spec: env.uploadSpec, buildInfo: env.buildInfo
                     rtServer.download spec: env.downloadSpec
 //                     jiraAddComment comment: 'Auto comment from Jenkins', idOrKey: 'LOC-10', site: 'Jira-Local-Site'
-                    jiraNewIssue issue: "New Issue from Jenkins", idOrKey: "LOC", site: 'Jira-Local-Site'
+                    jiraTransitionIssue idOrKey: 'LOC-90', input: "Jenkins Auto", site: 'Jira-Local-Site'
                 }
                            
             }
