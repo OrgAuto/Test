@@ -5,7 +5,6 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                deleteDir()
                 echo "${env.JOB_BASE_NAME}"
                 echo "${WORKSPACE}"
                 echo "${currentBuild.number}"
