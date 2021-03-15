@@ -49,14 +49,16 @@ pipeline {
             
         }
         stage('JIRA') {
+            steps {
                 def testIssue = [fields: [ project: [key: 'LOC'],
                                  summary: 'New JIRA Created from Jenkins.',
                                  description: 'New JIRA Created from Jenkins.',
                                  issuetype: [id: '10002']]]
 
-        response = jiraNewIssue issue: testIssue, site: 'Jira-Local-Site'
-        echo response.successful.toString()
-        echo response.data.toString()
+                response = jiraNewIssue issue: testIssue, site: 'Jira-Local-Site'
+                echo response.successful.toString()
+                echo response.data.toString()
+            }
         }
 
     }
