@@ -5,6 +5,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                deleteDir()
                 echo "${env.JOB_BASE_NAME}"
                 echo "${WORKSPACE}"
                 echo "${currentBuild.number}"
@@ -43,7 +44,7 @@ pipeline {
                     rtServer.upload spec: env.uploadSpec, buildInfo: env.buildInfo
                     rtServer.download spec: env.downloadSpec
 //                     jiraAddComment comment: 'Auto comment from Jenkins', idOrKey: 'LOC-10', site: 'Jira-Local-Site'
-                    jiraNewIssue site: 'Jira-Local-Site'
+                    jiraNewIssue site: 'Jira-Local-Site' issue: "New Issue from Jenkins"
                 }
                            
             }
