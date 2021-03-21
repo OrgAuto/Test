@@ -16,13 +16,13 @@ pipeline {
         stage('Download') {            
             steps {
                 echo "Executing another scripted pipeline Job"
-                script {
-                    def bRun = build 'DeployPipeline' 
-                    for(String line : bRun.getRawBuild().getLog(100)){
-                        echo "${line}"
-                    }
+                // script {
+                //     def bRun = build 'DeployPipeline' 
+                //     for(String line : bRun.getRawBuild().getLog(100)){
+                //         echo "${line}"
+                //     }
 
-                }
+                // }
 
             }
         }
@@ -42,7 +42,7 @@ pipeline {
                     fileOperations([fileZipOperation(folderPath: 'scripts', outputFolderPath: env.workspace)])
                     rtServer.upload spec: env.uploadSpec, buildInfo: env.buildInfo
                     rtServer.download spec: env.downloadSpec
-//                     jiraAddComment comment: 'Auto comment from Jenkins', idOrKey: 'LOC-10', site: 'Jira-Local-Site'
+                    jiraAddComment comment: 'Auto comment from Jenkins', idOrKey: 'LOC-10', site: 'Jira-Local-Site'
                 }
                            
             }
