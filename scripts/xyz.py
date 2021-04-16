@@ -1,6 +1,6 @@
 import path
 import sys
-import re
+import boto3
 
 folder = path.Path(__file__).abspath()
 sys.path.append(folder.parent.parent)
