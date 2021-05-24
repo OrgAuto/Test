@@ -9,6 +9,9 @@ pipeline {
                 echo "${WORKSPACE}"
                 echo "${currentBuild.number}"
                 echo "${currentBuild.changeSets}"
+                sh '''
+                python /Users/uprince/Project/Test/myIport.py
+                '''
 
             }
             
@@ -16,13 +19,13 @@ pipeline {
         stage('Download') {            
             steps {
                 echo "Executing another scripted pipeline Job"
-                // script {
-                //     def bRun = build 'DeployPipeline' 
-                //     for(String line : bRun.getRawBuild().getLog(100)){
-                //         echo "${line}"
-                //     }
+                script {
+                    def bRun = build 'durable-freestyle' 
+                    for(String line : bRun.getRawBuild().getLog(100)){
+                        echo "${line}"
+                    }
 
-                // }
+                }
 
             }
         }
