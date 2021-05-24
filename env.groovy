@@ -4,7 +4,7 @@ def build_time = now.format("yyMMdd_HHmm", TimeZone.getTimeZone('PST'))
 env.uploadSpec = """{
             "files": [
                 {
-                    "pattern": "*.zip",
+                    "pattern": "(*.zip | ./Logs/*)",
                     "target": "myrepo/${currentBuild.number}_${build_time}/${env.GIT_COMMIT}/",
                     "props": "type=zip;status=ready"
                 }

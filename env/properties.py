@@ -109,5 +109,5 @@ def extract_artifact(dir_name, zip_file_name):
     os.remove(zip_file_name)
 
 
-val = "Value"
+val = "Value from Properties"
 num = 5
