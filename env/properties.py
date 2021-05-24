@@ -1,12 +1,9 @@
-import sys
 import os
 import re
 import zipfile
-import base64
 import subprocess
-import requests
-import json
 import socket
+
 
 def get_query_string(deploy_script_name):
     querystring = {
@@ -103,138 +100,6 @@ def get_script_content(script_name_with_path):
     script_file = open(script_name_with_path, "r")
     content = script_file.read()
     return content
-
-
-# def script_content(script_path):
-#     script_file = open(script_path, "r")
-#     content = script_file.read()
-#     return content
-
-
-def get_token(domain_payload):
-    response = requests.request("POST", token_url, data=domain_payload, headers=None)
-    json_data = json.loads(response.text)
-    data = dict(json_data)
-    access_token = data["access_token"]
-    access_type = data["token_type"]
-    bearer_key = str(access_type + " " + access_token)
-    return bearer_key
-
-
-def get_gs_payload(gs_script_name, file_content):
-    payload = {
-        "scriptDefinition": {
-            "Name": gs_script_name,
-            "SystemId": gs_script_name + "_cpq",
-            "Active": True,
-            "script": file_content
-        }
-    }
-    return payload
-
-
-def get_ca_payload(ca_script_name, file_content):
-    custom_payload = {
-        "actionDefinition": {
-            "name": ca_script_name,
-            "placement": "C",
-            "SystemId": ca_script_name + "_cpq",
-            "actionDisplayLevel": True,
-            "script": file_content
-        },
-        "actionCondition": {
-            "globalCondition": "",
-            "preActionCondition": "",
-            "postActionCondition": ""
-        }
-    }
-    return custom_payload
-
-
-def get_rt_payload(rt_template_name, file_content):
-    template_payload = {
-            "Name": rt_template_name,
-            "TemplateId": 23,
-            "description": "",
-            "isDefault": False,
-            "content": file_content,
-            "SystemId": rt_template_name + "_cpq"
-
-    }
-    return template_payload
-
-
-def get_unit_test_payload(content, unit_test_script_basename):
-    ut_payload = {
-        "script": content,
-        "script_name": unit_test_script_basename
-    }
-    return ut_payload
-
-
-def get_script_cpq(method, url, headers, querystring):
-    response = requests.request(method, url, headers=headers, params=querystring)
-    data = dict(json.loads(response.text))
-    scripts = []
-    script_name = ""
-    script_id = ""
-    if data["totalNumberOfRecords"] == 0:
-        print("User Script is New")
-        script_name = ""
-        script_id = ""
-    elif data["totalNumberOfRecords"] == 1:
-        print("User Script exists in CPQ list")
-        if url == cpq_global_script_url:
-            script_name = data["pagedRecords"][0]["scriptDefinition"]["name"]
-            script_id = data["pagedRecords"][0]["scriptDefinition"]["id"]
-        elif url == cpq_custom_action_url:
-            script_name = data["pagedRecords"][0]["actionDefinition"]["name"]
-            script_id = data["pagedRecords"][0]["actionDefinition"]["id"]
-        elif url == cpq_custom_rt_url:
-            script_name = data["pagedRecords"][0]["name"]
-            script_id = data["pagedRecords"][0]["id"]
-    else:
-        print("No url received")
-    scripts.append(script_name)
-    scripts.append(script_id)
-    return scripts
-
-
-def deploy_script(url, usr_script, scripts, headers, payload):
-    if usr_script in scripts:
-        print(usr_script + " exists in CPQ")
-        print("Executing PUT request....")
-        url_script_id = scripts[1]
-        url = url + str(url_script_id)
-        response = requests.request("PUT", url, data=json.dumps(payload), headers=headers)
-        print(response.status_code)
-    else:
-        print(usr_script + " Does not exist")
-        print("Executing POST request....")
-        response = requests.request("POST", url, data=json.dumps(payload), headers=headers)
-        print(response.status_code)
-
-
-def get_unit_test_header(url, headers):
-    response = requests.request("POST", url, headers=headers)
-    data = response.text
-    json_object = dict(json.loads(data))
-    json_data = json.dumps(json_object["token"], indent=2)
-    new_token = json.loads(json_data)
-    jwt_header = {
-        'authorization': "Bearer " + new_token,
-        'content-type': "application/json"
-    }
-    return jwt_header
-
-
-def run_unit_test(url, payload, headers, querystring):
-    test_response = requests.request("POST", url, data=str(payload), headers=headers,
-                                     params=querystring)
-    test_data = test_response.text
-    test_object = dict(json.loads(test_data))
-    test_json_data = json.dumps(test_object, indent=2)
-    return test_json_data
 
 
 def extract_artifact(dir_name, zip_file_name):
