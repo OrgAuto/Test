@@ -43,6 +43,7 @@ pipeline {
                     def buildInfo = Artifactory.newBuildInfo()
                     archiveArtifacts artifacts: 'scripts/*, Logs/*', onlyIfSuccessful: true               
                     fileOperations([fileZipOperation(folderPath: 'scripts', outputFolderPath: env.workspace)])
+		                println(env_name)
                     fileOperations([fileZipOperation(folderPath: 'Logs', outputFolderPath: env.workspace)])
                     rtServer.upload spec: env.uploadSpec, buildInfo: env.buildInfo
                     rtServer.publishBuildInfo buildInfo
