@@ -9,6 +9,9 @@ pipeline {
                 echo "${WORKSPACE}"
                 echo "${currentBuild.number}"
                 echo "${currentBuild.changeSets}"
+                sh '''
+                python /Users/uprince/Project/Test/myIport.py
+                '''
 
             }
             
@@ -16,13 +19,13 @@ pipeline {
         stage('Download') {            
             steps {
                 echo "Executing another scripted pipeline Job"
-                // script {
-                //     def bRun = build 'DeployPipeline' 
-                //     for(String line : bRun.getRawBuild().getLog(100)){
-                //         echo "${line}"
-                //     }
+                script {
+                    def bRun = build 'durable-freestyle' 
+                    for(String line : bRun.getRawBuild().getLog(100)){
+                        echo "${line}"
+                    }
 
-                // }
+                }
 
             }
         }
@@ -38,9 +41,10 @@ pipeline {
                     load "env.groovy"
                     def rtServer = Artifactory.server("ArtifactoryLocal")
                     def buildInfo = Artifactory.newBuildInfo()
-                    archiveArtifacts artifacts: 'scripts/*', onlyIfSuccessful: true               
+                    archiveArtifacts artifacts: 'scripts/*, Logs/*', onlyIfSuccessful: true               
                     fileOperations([fileZipOperation(folderPath: 'scripts', outputFolderPath: env.workspace)])
-		    println(env_name)
+		                println(env_name)
+                    fileOperations([fileZipOperation(folderPath: 'Logs', outputFolderPath: env.workspace)])
                     rtServer.upload spec: env.uploadSpec, buildInfo: env.buildInfo
                     rtServer.publishBuildInfo buildInfo
                     rtServer.download spec: env.downloadSpec
